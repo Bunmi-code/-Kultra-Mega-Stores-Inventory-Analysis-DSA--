@@ -9,7 +9,7 @@ A data-driven project analyzing sales and customer data from Kultra Mega Stores 
 - Present results clearly using query outputs
 
 ### Data Source 
-Kultra Mega Stores Database 
+Kultra Mega Stores
 
 ### Tools and Technologies 
 
@@ -57,6 +57,12 @@ services do they typically purchase?
 
 #### Buttom 10 customer by Revenue 
 
+Recommendation On how to increase Revenue. 
+
+  1. Offer discount on the category of product they purchase
+  2.  Personal awareness on the available loyalty offers
+  3.   Feedback and personal survey to identify the reason for low sales. 
+
 #### The most use shipping with it cost
 
 #### The most valuable customers and with their various products category 
@@ -70,5 +76,11 @@ services do they typically purchase?
 #### Tha customer that returned items, and the segment they belong to
 
 #### Appropriation of shipping costs based on order priority 
+
+Recommendation
+
+-  Urgent orders should be treated as priority and means of shipping the order should be Express or Regular Air, which are both faster and cheaper based on actual cost data.
+ -  Delivery Truck should be assign for low-priority orders or bulk shipments
+
 
 
