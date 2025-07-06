@@ -49,11 +49,24 @@ services do they typically purchase?
 [Download Here](https://github.com/Bunmi-code/-Kultra-Mega-Stores-Inventory-Analysis-DSA--/blob/main/SQLQuery3%5BKultra%20Mega%20Store%20Analysis%5D%20-%20Copy.sql)
 
 #### product category with highest sales 
-
+<PRE>select top 1
+[product_category],
+Sum([sales]) As Totalsales
+from[Database_KMSCasestudy].[dbo].[KMS Sql Case Study]
+Group by [product_category]
+Order by Totalsales Desc;
+  </PRE>
 product_category	Totalsales
 Technology	5984248.1820000000
 
 #### Top3 Regions with high sales
+<PRE>select top 3
+[Region],[Product_category],
+sum([sales]) as totalsales
+from[Database_KMSCasestudy].[dbo].[KMS Sql Case Study]
+Group by [region] ,[Product_category]
+order by totalsales DESC;
+</PRE>
 Region                                             totalsales
 -------------------------------------------------- ---------------------------------------
 Nunavut                                            116376.4835000000
@@ -62,11 +75,27 @@ Yukon                                              975867.3710000000
 
 
 #### Total Sales of appliances in Ontario
+<PRE>select top 3
+[Region],[Product_category],
+sum([sales]) as totalsales
+from[Database_KMSCasestudy].[dbo].[KMS Sql Case Study]
+Group by [region] ,[Product_category]
+order by totalsales DESC;
+</PRE>
 totalsales
 ---------------------------------------
 202346.8400000000
 
-#### Buttom 10 customer by Revenue            
+#### Buttom 10 customer by Revenue 
+<PRE> select Top 10 [customer_name], [Region],[Product_category],
+ count([order_id]) as
+ numberoforders,
+ avg([Unit_Price]) as
+ Averageprice,
+ sum([sales]) as totalrevenue
+from[Database_KMSCasestudy].[dbo].[KMS Sql Case Study]
+group by [Customer_Name], [Region],[product_category]
+order by totalrevenue ASC;</PRE>
 customer_name                                      Region                                             Product_category                                   numberoforders Averageprice                            totalrevenue
 -------------------------------------------------- -------------------------------------------------- -------------------------------------------------- -------------- --------------------------------------- ---------------------------------------
 Andy Reiter                                        Quebec                                             Office Supplies                                    1              1.8800000000                            3.4200000000
@@ -87,6 +116,11 @@ Recommendation On how to increase Revenue.
   3.   Feedback and personal survey to identify the reason for low sales. 
 
 #### The most use shipping with it cost
+<PRE>elect top 1[ship_Mode],
+ Count (*) As Usagecount
+ from[Database_KMSCasestudy].[dbo].[KMS Sql Case Study]
+ Group By[ship_mode]
+ Order by Usagecount Desc;</PRE>
 
 ship_Mode                                          Usagecount
 -------------------------------------------------- -----------
@@ -94,6 +128,13 @@ Regular Air                                        6270
 
 
 #### The most valuable customers and with their various products category 
+<PRE>Select top 10
+[customer_name],[Product_Category],
+sum([sales]) as Totalsales
+from[Database_KMSCasestudy].[dbo].[KMS Sql Case Study]
+Group by [customer_name],[Product_category]
+Order by totalSales Desc;</PRE>
+
 Deborah Brumfield                                  Technology                                         76795.7955000000
 Dennis Kane                                        Technology                                         60434.6405000000
 Jasper Cacioppo                                    Technology                                         57739.2700000000
@@ -105,24 +146,66 @@ Grant Carroll                                      Office Supplies              
 Roy Skaria                                         Furniture                                          50177.2400000000
 
 #### The small business with the highest sales
+<PRE>select top 1
+ [Customer_Name],
+ sum([sales]) as Smallbusinesssales
+ from [Database_KMSCasestudy].[dbo].[KMS Sql Case Study]
+ where customer_segment='small business'
+ Group by [Customer_name]
+ order by Smallbusinesssales ASC;</PRE>
+ 
 Customer_Name                                      Smallbusinesssales
 -------------------------------------------------- ---------------------------------------
 Jeremy Farry                                       85.7200000000
 
+
 #### Corporate Customer that placed the most number of orders in 2009 – 2012
+<PRE>select top 1
+[customer_name],[Product_category],
+Count([order_id]) as ordercount,
+sum (sales) as totalsales
+from [Database_KMSCasestudy].[dbo].[KMS Sql Case Study]
+where [customer_segment]='corporate'
+and try_convert (date,[order_date],120) between '2009-01-01' and '2012-12-31'
+group by [customer_name],[product_category]
+order by orderCount desc;</PRE>
+
 customer_name                                      Product_category                                   ordercount  totalsales
 -------------------------------------------------- -------------------------------------------------- ----------- ---------------------------------------
 Adam Hart                                          Office Supplies                                    17          12544.1400000000
 
 
 #### Most profitable customer 
+<PRE> select top 1
+ [customer_name],[product_category],
+ sum (profit) as totalprofit
+ from[Database_KMSCasestudy].[dbo].[KMS Sql Case Study]
+ group by customer_name, product_category
+ order by totalprofit desc;</PRE>
+ 
 customer_name                                      product_category                                   totalprofit
 -------------------------------------------------- -------------------------------------------------- ---------------------------------------
 Emily Phan                                         Technology                                         34233.9900000000
 
-#### Tha customer that returned items, and the segment they belong to
 
+#### Tha customer that returned items, and the segment they belong to
+<PRE>SELECT
+a.[customer_name],
+a.[customer_segment],
+b.[status]
+from [Database_KMSCasestudy].[dbo].[KMS Sql Case Study] a
+join[Database_KMSCasestudy].[dbo].[order_status]b
+on a.[Order_id] =b.[order_id]
+where b.[status]= 'returned'</PRE>
+573  Customers returned item
 #### Appropriation of shipping costs based on order priority 
+<pre>select [ship_mode],
+Round (sum(sales-Profit),2) as EstimatedshippingCost,
+AVG(DATEDIFF(day,[Order_Date], [Ship_Date])) AS AvgShipDays
+From[Database_KMSCasestudy].[dbo].[KMS Sql Case Study]
+Group by[ship_mode],[order_priority]
+order by [ship_mode],[order_priority]</pre>
+
 ship_mode                                          EstimatedshippingCost                   AvgShipDays
 -------------------------------------------------- --------------------------------------- -----------
 Delivery Truck                                     1221313.1100000000                      1
